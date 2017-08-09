@@ -41,10 +41,12 @@ const devPlugins = () => {
     }
 
     const generateHtml = () => {
-      const jsdom = require('jsdom');
-      const document = jsdom.jsdom(fs.readFileSync(indexHTML, 'utf8').toString());
-      document.head.insertAdjacentHTML('beforeend', `<script type="text/javascript" src="${publicPath}vendors/vendors-bundle.js"></script>`);
-      return jsdom.serializeDocument(document);
+      const jsdom = require("jsdom");
+      const { JSDOM } = jsdom;
+
+      const dom = new JSDOM(fs.readFileSync(indexHTML, 'utf8').toString());
+      dom.window.document.head.insertAdjacentHTML('beforeend', `<script type="text/javascript" src="${publicPath}vendors/vendors-bundle.js"></script>`);
+      return '<!DOCTYPE HTML>' + '\n' + dom.window.document.documentElement.outerHTML;
     };
     clioutput.info('starting...');
     return [
@@ -290,54 +292,64 @@ module.exports = {
       {
         test: /\.js[x]?$/,
         enforce: 'pre',
+        use: {
+          loader: 'eslint-loader',
+          options: {
+            configFile: './config/eslint.json',
+            // 自動修正させる
+            fix: true,
+            // eslintでエラーだしたらビルドを中断する
+            failOnError: true,
+          },
+        },
         include: [src],
         exclude: [/node_modules/],
-        loader: 'eslint-loader',
-        options: {
-          configFile: './config/eslint.json',
-          // 自動修正させる
-          fix: true,
-          // eslintでエラーだしたらビルドを中断する
-          failOnError: true,
-        },
       },{
         test: /\.js[x]?$/,
         include: [src],
         exclude: [/node_modules/],
-        loader: 'babel-loader',
+        use: {
+          loader: 'babel-loader',
+        },
       },{
         test: /\.html$/,
-        loader: 'html-loader',
+        use: {
+          loader: 'html-loader',
+        },
       },{
         test: /\.hbs/,
-        loader: "handlebars-loader"
+        use: {
+          loader: "handlebars-loader",
+        },
       },{
         test: /\.json$/,
-        loader: 'json-loader',
+        use: {
+          loader: 'json-loader',
+        },
       },{
         test: /\.(jpg|jpeg)$/,
-        loader: 'url-loader?name=[name].[ext]&limit=8192&mimetype=image/jpg'
+        use: 'url-loader?name=[name].[ext]&limit=8192&mimetype=image/jpg'
       },{
         test: /\.gif$/,
-        loader: 'url-loader?name=[name].[ext]&limit=8192&mimetype=image/gif'
+        use: 'url-loader?name=[name].[ext]&limit=8192&mimetype=image/gif'
       },{
         test: /\.png$/,
-        loader: 'url-loader?name=[name].[ext]&limit=8192&mimetype=image/png'
+        use: 'url-loader?name=[name].[ext]&limit=8192&mimetype=image/png'
       },{
         test: /\.svg$/,
-        loader: 'url-loader?name=[name].[ext]&limit=8192&mimetype=image/svg+xml'
+        use: 'url-loader?name=[name].[ext]&limit=8192&mimetype=image/svg+xml'
       },{
         test: /\.woff?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: ['url-loader?name=[name].[ext]&limit=100000&mimetype=application/font-woff']
+        use: ['url-loader?name=[name].[ext]&limit=100000&mimetype=application/font-woff']
       },{
         test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: ['url-loader?name=[name].[ext]&limit=100000&mimetype=application/font-woff2']
+        use: ['url-loader?name=[name].[ext]&limit=100000&mimetype=application/font-woff2']
       },{
         test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: ['file-loader?name=[name].[ext]&limit=100000&mimetype=application/octet-stream']
+        use: ['file-loader?name=[name].[ext]&limit=100000&mimetype=application/octet-stream']
       },{
         test: /\.otf(\?.*)?$/,
-        loader: 'file-loader?name=[name].[ext]&limit=10000&mimetype=font/opentype'
+        use: 'file-loader?name=[name].[ext]&limit=10000&mimetype=font/opentype'
       },
     ].concat(cssRules)
   },
