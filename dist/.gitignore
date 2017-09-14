@@ -3,5 +3,3 @@
 # to commit any files from here to your repository.
 # Instead your CI (Continuous Integration) should create build artifact
 # containing these files.
-*
-!.gitignore

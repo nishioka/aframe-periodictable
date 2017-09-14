@@ -41,8 +41,8 @@
     "dev": "babel-node devel --env.devel --hot --port 9000"
   },
   "dependencies": {
-    "aframe": "^0.6.0",
-    "aframe-extras": "^3.8.6",
+    "aframe": "^0.6.1",
+    "aframe-extras": "^3.11.4",
     "babel-polyfill": "^6.20.0",
     "cannon": "^0.6.2",
     "whatwg-fetch": "^2.0.1"
