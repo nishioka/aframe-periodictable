@@ -18,7 +18,7 @@ const dist = path.resolve(process.cwd(), 'dist');
 const jsDir = path.resolve(dist, 'js');
 const cssDir = path.resolve(dist, 'css');
 const vendorDir = path.resolve(dist, 'vendors');
-const publicPath = '/';
+const publicPath = './';
 
 const devPlugins = () => {
 

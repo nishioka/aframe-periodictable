@@ -38,6 +38,7 @@
     "prebuild": "npm-run-all clean:dist vendor:perf",
     "build": "webpack --config ./config/webpack.config.babel.js --env.devel --progress",
     "start": "set NODE_ENV=test && npm-run-all build dev",
+    "deploy": "npm run build && gh-pages -d dist",
     "dev": "babel-node devel --env.devel --hot --port 9000"
   },
   "dependencies": {
@@ -77,6 +78,7 @@
     "express": "^4.15.3",
     "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.11.2",
+    "gh-pages": "^1.0.0",
     "handlebars-loader": "^1.4.0",
     "html-loader": "^0.4.5",
     "html-webpack-plugin": "^2.29.0",
