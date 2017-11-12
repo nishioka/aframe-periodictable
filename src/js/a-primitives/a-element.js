@@ -18,6 +18,7 @@ AFRAME.registerPrimitive('a-element', extendDeep({}, meshMixin, {
   // (using dots as delimiters). If we set `depth="5"` in HTML,
   // then the primitive will automatically set `geometry="depth: 5"`.
   mappings: {
+    number: 'element.number',
     symbol: 'element.symbol',
     details: 'element.details',
     mol: 'element.mol',

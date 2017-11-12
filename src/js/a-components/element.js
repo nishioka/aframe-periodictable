@@ -12,12 +12,15 @@ AFRAME.registerComponent('element', {
   multiple: false,
 
   schema: {
+    number: {default: 0},
     symbol: {default: ''},
     details: {default: ''},
-    mol: {default: 0},
+    mol: {default: ''},
     x: {default: 0},
     y: {default: 0}
   },
+
+  formState: 0,
 
   // Called once when the component is initialized.
   // Used to set up initial state and instantiate variables.
@@ -139,16 +142,18 @@ AFRAME.registerComponent('element', {
       });
 
       // 初期位置はランダムで配置
-      const mesh = new THREE.Mesh(geometry, material);
-      mesh.position.x = Math.random() * 4000 - 2000;
-      mesh.position.y = Math.random() * 4000 - 2000;
-      mesh.position.z = Math.random() * 4000 - 2000;
+      this.mesh = new THREE.Mesh(geometry, material);
+      // this.mesh.position.x = Math.random() * 4000 - 2000;
+      // this.mesh.position.y = Math.random() * 4000 - 2000;
+      // this.mesh.position.z = Math.random() * 4000 - 2000;
 
       // オブジェクト破棄
       const DOMURL = self.URL || self.webkitURL || self;
       DOMURL.revokeObjectURL(url);
 
-      this.el.setObject3D('mesh', mesh);
+      this.el.setObject3D('mesh', this.mesh);
+
+      // this.el.emit('table-start');
     });
     // image.addEventListener('error', err => {
     // rejector(err);
@@ -178,7 +183,41 @@ AFRAME.registerComponent('element', {
 
   // Called whenever the scene or entity plays to add
   // any background or dynamic behavior. Used to start or resume behavior.
-  play () {},
+  play () {
+    /**
+     * Use play() instead of init(), because component mappings – unavailable as dependencies – are
+     * not guaranteed to have parsed when this component is initialized.
+     */
+    //   var el = this.el,
+    //       data = this.data,
+    //       material = el.components.material;
+    //
+    //   var geometry = new THREE.PlaneGeometry(data.width, data.depth, data.density, data.density);
+    //   geometry.mergeVertices();
+    //   this.waves = [];
+    //   for (var v, i = 0, l = geometry.vertices.length; i < l; i++) {
+    //     v = geometry.vertices[i];
+    //     this.waves.push({
+    //       z: v.z,
+    //       ang: Math.random() * Math.PI * 2,
+    //       amp: data.amplitude + Math.random() * data.amplitudeVariance,
+    //       speed: (data.speed + Math.random() * data.speedVariance) / 1000 // radians / frame
+    //     });
+    //   }
+    //
+    //   if (!material) {
+    //     material = {};
+    //     material.material = new THREE.MeshPhongMaterial({
+    //       color: data.color,
+    //       transparent: data.opacity < 1,
+    //       opacity: data.opacity,
+    //       shading: THREE.FlatShading,
+    //     });
+    //   }
+    //
+    //   this.mesh = new THREE.Mesh(geometry, material.material);
+    //   el.setObject3D('mesh', this.mesh);
+  },
 
   // Called whenever the scene or entity pauses to remove any
   // background or dynamic behavior. Used to pause behavior.
@@ -186,39 +225,4 @@ AFRAME.registerComponent('element', {
 
   // Called on every update. Can be used to dynamically modify the schema.
   updateSchema () {}
-  /**
-   * Use play() instead of init(), because component mappings – unavailable as dependencies – are
-   * not guaranteed to have parsed when this component is initialized.
-   */
-  // play: function () {
-  //   var el = this.el,
-  //       data = this.data,
-  //       material = el.components.material;
-  //
-  //   var geometry = new THREE.PlaneGeometry(data.width, data.depth, data.density, data.density);
-  //   geometry.mergeVertices();
-  //   this.waves = [];
-  //   for (var v, i = 0, l = geometry.vertices.length; i < l; i++) {
-  //     v = geometry.vertices[i];
-  //     this.waves.push({
-  //       z: v.z,
-  //       ang: Math.random() * Math.PI * 2,
-  //       amp: data.amplitude + Math.random() * data.amplitudeVariance,
-  //       speed: (data.speed + Math.random() * data.speedVariance) / 1000 // radians / frame
-  //     });
-  //   }
-  //
-  //   if (!material) {
-  //     material = {};
-  //     material.material = new THREE.MeshPhongMaterial({
-  //       color: data.color,
-  //       transparent: data.opacity < 1,
-  //       opacity: data.opacity,
-  //       shading: THREE.FlatShading,
-  //     });
-  //   }
-  //
-  //   this.mesh = new THREE.Mesh(geometry, material.material);
-  //   el.setObject3D('mesh', this.mesh);
-  // },
 });

@@ -1,3 +1,14 @@
 {{#each defaults.elements}}
-  <a-element symbol="{{symbol}}" details="{{details}}" mol="{{mol}}" x="{{x}}" y="{{y}}"></a-element>
+  <a-element number="{{number}}" symbol="{{symbol}}" details="{{details}}" mol="{{mol}}" x="{{x}}" y="{{y}}">
+    <a-animation id="init-random" attribute="position" to="{{randomPosition}}" dur="5000"></a-animation>
+    <a-animation id="random-table" attribute="position" from="{{randomPosition}}" to="{{tablePosition}}" dur="10000" begin="random-table-start"></a-animation>
+    <a-animation attribute="rotation" to="0 360 0" dur="10000" begin="random-table-start"></a-animation>
+    <a-animation id="grid-table" attribute="position" from="{{gridPosition}}" to="{{tablePosition}}" dur="10000" begin="grid-table-start"></a-animation>
+    <a-animation id="table-sphere" attribute="position" from="{{tablePosition}}" to="{{spherePosition}}" dur="10000" begin="table-sphere-start"></a-animation>
+    <a-animation id="table-sphere" attribute="rotation" to="{{sphereRotation}}" dur="10000" begin="table-sphere-start"></a-animation>
+    <a-animation id="sphere-helix" attribute="position" from="{{spherePosition}}" to="{{helixPosition}}" dur="10000" begin="sphere-helix-start"></a-animation>
+    <a-animation id="sphere-helix" attribute="rotation" to="{{helixRotation}}" dur="10000" begin="sphere-helix-start"></a-animation>
+    <a-animation id="helix-grid" attribute="position" from="{{helixPosition}}" to="{{gridPosition}}" dur="10000" begin="helix-grid-start"></a-animation>
+    <a-animation id="helix-grid" attribute="rotation" to="0 0 0" dur="10000" begin="helix-grid-start"></a-animation>
+  </a-element>
 {{/each}}

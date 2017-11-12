@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import webpack from 'webpack';
 import config from '../config/webpack.config.babel';
 import express from 'express';

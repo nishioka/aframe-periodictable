@@ -18,7 +18,7 @@ const dist = path.resolve(process.cwd(), 'dist');
 const jsDir = path.resolve(dist, 'js');
 const cssDir = path.resolve(dist, 'css');
 const vendorDir = path.resolve(dist, 'vendors');
-const publicPath = './';
+const publicPath = '/';
 
 const devPlugins = () => {
 
@@ -45,7 +45,10 @@ const devPlugins = () => {
       const { JSDOM } = jsdom;
 
       const dom = new JSDOM(fs.readFileSync(indexHTML, 'utf8').toString());
-      dom.window.document.head.insertAdjacentHTML('beforeend', `<script type="text/javascript" src="${publicPath}vendors/vendors-bundle.js"></script>`);
+      dom.window.document.head.insertAdjacentHTML(
+        'beforeend',
+        `<script type="text/javascript" src="${publicPath}vendors/vendors-bundle.js"></script>`
+      );
       return '<!DOCTYPE HTML>' + '\n' + dom.window.document.documentElement.outerHTML;
     };
     clioutput.info('starting...');
