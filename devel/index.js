@@ -50,7 +50,7 @@ app.use('/api', routing);
 app.use(history({
   verbose: false,
 }));
-app.use(publicPath, express.static(outputPath));
+app.use('/', express.static(outputPath));
 
 process.on('uncaughtException', err => {
   clioutput.error('Uncaught Exception ', err.stack);

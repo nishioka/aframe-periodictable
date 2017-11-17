@@ -1,6 +1,6 @@
 {
   "name": "aframe-periodictable",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A-Frame Sample",
   "author": "Norihito Nishioka (https://github.com/nishioka)",
   "main": "src/js/index.js",
